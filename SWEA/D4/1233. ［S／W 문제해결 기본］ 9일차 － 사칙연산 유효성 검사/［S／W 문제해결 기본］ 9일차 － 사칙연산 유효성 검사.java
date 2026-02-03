@@ -9,8 +9,6 @@ public class Solution {
         int T = 10;
         for (int test_case = 1; test_case <= T; test_case++) {
         	int N = Integer.parseInt(br.readLine());
-        	char[] tree = new char[N + 1];
-        	
         	int result = 1;
         	int skip = 0;
         	for (int i = 1; i < N + 1; i++) {
@@ -29,8 +27,6 @@ public class Solution {
         			result = 0;
         			break;
         		}
-        		
-        		tree[i] = ch;
         	}
         	for (int i = skip; i < N + 1; i++) {
         		br.readLine();
