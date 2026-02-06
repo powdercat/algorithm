@@ -112,18 +112,6 @@ public class Solution {
 				}
 			}
 
-			String val = "";
-			if (dir == 0) {
-				val = "^";
-			} else if (dir == 1) {
-				val = "v";
-			} else if (dir == 2) {
-				val = "<";
-			} else {
-				val = ">";
-			}
-			map[cx][cy] = val;
-    		
         	System.out.printf("#%d ", t);
 			for (int i = 0; i < H; i++) {
 				for (int j = 0; j < W; j++) {
