@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -78,11 +77,7 @@ public class Solution {
 							break;
 						}
 						// .과 -일 때 포탄은 계속되어야 함
-						if (val.equals(".") || val.equals("-")) {
-							tmp++;
-							continue;
-						}
-						break;
+						tmp++;
 					}
 					continue;
 				}
@@ -137,8 +132,5 @@ public class Solution {
 				System.out.println();
 			}
     	}
-    	
     }
-    
 }
-
