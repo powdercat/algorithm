@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 public class Solution {
 	static int[] scores;
 	static int[] cals;
-	static boolean[] selected;
 	static int maxScore;
 	static int N;
 	static int L;
@@ -22,7 +21,6 @@ public class Solution {
     		
         	scores = new int[N];
         	cals = new int[N];
-        	selected = new boolean[N];
     		
     		for (int i = 0; i < N; i++) {
         		input_str = br.readLine().split(" ");
