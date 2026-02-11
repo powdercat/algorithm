@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Solution {
-	static int[][] energy;
+	static int[][] energy = new int[4001][4001];
 	static class Atom {
 		int x;
 		int y;
@@ -41,7 +41,8 @@ public class Solution {
     	int T = Integer.parseInt(br.readLine());
     	for (int t = 1; t <= T; t++) {
     		sb.append("#").append(t).append(" ");
-    		energy = new int[4001][4001];
+    		// 아래 while 문에서 다 0으로 초기화 하기 때문에 또 초기화할 필요 없음
+    		// energy = new int[4001][4001];
     		List<Atom> list = new ArrayList<>();
     		
     		int N = Integer.parseInt(br.readLine());
@@ -55,7 +56,7 @@ public class Solution {
         		energy[x][y] = k;
     		}
     		int sum = 0;
-    		while (list.size() > 1) {
+    		while (!list.isEmpty()) {
     			// 원자들 모두 1씩 이동
         		for (int i = list.size() - 1; i >= 0; i--) {
         			Atom atom = list.get(i);
