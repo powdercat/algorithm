@@ -1,50 +1,43 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-	static int[] permut;
-	static int[] numbers;
-	static boolean[] used;
-	static int N;
-	static int M;
-	
-	static StringBuilder sb = new StringBuilder();
-	
-    public static void main(String[] args) throws Exception {
-    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    	String[] input_str = br.readLine().split(" ");
-    	N = Integer.parseInt(input_str[0]);
-    	M = Integer.parseInt(input_str[1]);
-    	used = new boolean[N];
-    	numbers = new int[N];
-    	for (int i = 0; i < N; i++) {
-    		numbers[i] = i + 1;
-    	}
-    	permut = new int[M];
-    	
-    	permutation(0);
-    	System.out.println(sb);
+
+    static int N, M;
+    static int[] numbers, result;
+    static boolean[] selected;
+    static StringBuilder sb;
+
+    public static void main(String args[]) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        sb = new StringBuilder();
+
+        String[] input = br.readLine().split(" ");
+        N = Integer.parseInt(input[0]);
+        M = Integer.parseInt(input[1]);
+        numbers = new int[N];
+        selected = new boolean[N];
+        result = new int[M];
+        for (int i = 1; i <= N; i++) {
+            numbers[i - 1] = i;
+        }
+        permut(0);
+        System.out.println(sb);
     }
-    
-    private static void permutation(int cnt) {
-    	if (cnt == M) {
-    		for (int p : permut) {
-    			sb.append(p).append(" ");
-    		}
-    		sb.append("\n");
-    		return;
-    	}
-    	
-    	for (int i = 0; i < N; i++) {
-    		if (used[i]) {
-    			continue;
-    		}
-    		
-    		permut[cnt] = numbers[i];
-    		used[i] = true;
-    		permutation(cnt + 1);
-    		used[i] = false;
-    	}
+
+    static void permut(int depth) {
+        if (depth == M) {
+            for (int i = 0; i < M; i++) {
+                sb.append(result[i]).append(" ");
+            }
+            sb.append("\n");
+            return;
+        }
+        for (int i = 0; i < N; i++) {
+            if (selected[i]) continue;
+            result[depth] = numbers[i];
+            selected[i] = true;
+            permut(depth + 1);
+            selected[i] = false;
+        }
     }
 }
