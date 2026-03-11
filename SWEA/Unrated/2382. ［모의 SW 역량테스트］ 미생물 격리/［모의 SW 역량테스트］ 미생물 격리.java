@@ -78,9 +78,10 @@ public class Solution {
     				}
 					cntMapTemp[nx][ny] += cnt;
 
-//    				mix.put(Arrays.asList(nx, ny), Arrays.asList(cnt));
-//    				mix.computeIfAbsent(Arrays.asList(nx, ny), k -> new ArrayList<>()).add(cnt);
-					mix.computeIfAbsent(Arrays.asList(nx, ny), ArrayList::new).add(cnt);
+					if (!mix.containsKey(Arrays.asList(nx, ny))) {
+					    mix.put(Arrays.asList(nx, ny), new ArrayList<>());
+					}
+					mix.get(Arrays.asList(nx, ny)).add(cnt);
     			}
     			
     			// 원본에 temp 넣기, 살아남은 좌표들 큐에 넣기
