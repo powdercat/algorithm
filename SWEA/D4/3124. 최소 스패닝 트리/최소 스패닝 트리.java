@@ -1,10 +1,20 @@
 import java.io.*;
-import java.util.Arrays;
+import java.util.*;
 
 public class Solution {
 	
-	static int[] parents;
-
+	static class Node {
+		int vertex, weight;
+		Node next;
+		
+		public Node(int vertex, int weight, Solution.Node next) {
+			super();
+			this.vertex = vertex;
+			this.weight = weight;
+			this.next = next;
+		}
+	}
+	
     public static void main(String[] args) throws Exception {
 
     	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,59 +24,43 @@ public class Solution {
     		String[] input = br.readLine().split(" ");
     		int V = Integer.parseInt(input[0]);
     		int E = Integer.parseInt(input[1]);
+    		boolean[] visited = new boolean[V];
+    		Node[] adjList = new Node[V];
     		
-    		int[][] edges = new int[E][3];
     		for (int i = 0; i < E; i++) {
         		String[] input2 = br.readLine().split(" ");
-        		int A = Integer.parseInt(input2[0]) - 1;
-        		int B = Integer.parseInt(input2[1]) - 1;
-    			int C = Integer.parseInt(input2[2]);
-    			edges[i] = new int[] {A, B, C};
-    		}
+        		int from = Integer.parseInt(input2[0]) - 1;
+        		int to = Integer.parseInt(input2[1]) - 1;
+    			int w = Integer.parseInt(input2[2]);
+    			adjList[from] = new Node(to, w, adjList[from]);
+    			adjList[to] = new Node(from, w, adjList[to]);
+			}
     		
-    		parents = new int[V];
-    		for (int p = 0; p < V; p++) {
-    			parents[p] = -1;
-    		}
+    		// {가중치, 정점} 오름차순
+    		PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+    		pq.offer(new int[] {0, 0});
     		
-    		Arrays.sort(edges, (e1, e2) -> e1[2] - e2[2]);
-    		
-    		int count = 0;
     		long result = 0;
-    		for (int[] edge : edges) {
-    			int a = edge[0];
-    			int b = edge[1];
-    			int w = edge[2];
-    			if (union(a, b)) {
-    				result += w;
-    				count++;
-    				if (count == V - 1) {
-    					break;
-    				}
+    		int count = 0;
+    		
+    		while (!pq.isEmpty() && count < V) {
+    			int[] cur = pq.poll();
+    			int weight = cur[0];
+    			int minVertex = cur[1];
+    			
+    			if (visited[minVertex]) continue;
+    			
+    			visited[minVertex] = true;
+    			result += weight;
+    			count++;
+    			
+    			for (Node temp = adjList[minVertex]; temp != null; temp = temp.next) {
+    				if (visited[temp.vertex]) continue;
+    				pq.offer(new int[] {temp.weight, temp.vertex});
     			}
     		}
-    		System.out.println("#" + tc + " " + result);
     		
+    		System.out.println("#" + tc + " " + result);
     	}
-    }
-    
-    static int findRoot(int a) {
-    	if (parents[a] < 0) return a;
-    	return parents[a] = findRoot(parents[a]);
-    }
-    
-    static boolean union(int a, int b) {
-    	int aRoot = findRoot(a);
-    	int bRoot = findRoot(b);
-    	if (aRoot == bRoot) return false;
-    	
-    	if (parents[aRoot] >= parents[bRoot]) {
-    		parents[aRoot] += parents[bRoot];
-    		parents[bRoot] = aRoot;
-    	} else {
-    		parents[bRoot] += parents[aRoot];
-    		parents[aRoot] = bRoot;
-    	}
-    	return true;
     }
 }
